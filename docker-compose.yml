@@ -17,6 +17,23 @@ services:
     networks:
       - elk
 
+  elastalert:
+    build:
+      context: elastalert/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml:ro
+      - ./elastalert/config/config.json:/opt/elastalert-server/config/config.json:ro
+      - ./elastalert/rules:/opt/elastalert/rules:ro
+      - ./elastalert/rule_templates:/opt/elastalert/rule_templates:ro
+    ports:
+      - "3030:3030"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
   logstash:
     build:
       context: logstash/
@@ -48,6 +65,7 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - elastalert
 
 networks:
 
