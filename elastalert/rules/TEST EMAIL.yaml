@@ -1,0 +1,23 @@
+# From example_rules/example_frequency.yaml
+es_host: elasticsearch
+es_port: 9200
+name: Test Email Rule
+type: any
+index: logs-*
+num_events: 1
+timeframe:
+    minutes: 2
+filter:
+- query:
+    regexp:
+      message: ".*"
+alert:
+- "email"
+- "slack"
+email: 
+-  "ndthuanuet@gmail.com"
+smtp_auth_file: '../smtp_auth_file.yaml'
+smtp_host: 'smtp.gmail.com'
+smtp_port: 587
+smtp_ssl: false
+slack_webhook_url: "https://hooks.slack.com/services/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"
