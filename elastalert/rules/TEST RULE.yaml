@@ -1,0 +1,16 @@
+# From example_rules/example_frequency.yaml
+es_host: elasticsearch
+es_port: 9200
+name: Test Rule
+type: any
+index: logstash-*
+num_events: 1
+timeframe:
+    hours: 1
+filter:
+- query:
+    regexp:
+      message: "info.*"
+alert:
+- "slack"
+slack_webhook_url: "https://hooks.slack.com/services/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"
