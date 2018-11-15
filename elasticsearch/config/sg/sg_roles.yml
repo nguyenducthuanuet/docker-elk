@@ -83,7 +83,7 @@ sg_logstash:
     - indices:admin/template/get
     - indices:admin/template/put
   indices:
-    'logstash-*':
+    '*':
       '*':
         - CRUD
         - CREATE_INDEX
