@@ -10,13 +10,31 @@ services:
         SG_VERSION: $SG_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
-      - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       - elk
+
+   elastalert:
+    build:
+      context: elastalert/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - ./elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml:ro
+      - ./elastalert/config/config.json:/opt/elastalert-server/config/config.json:ro
+      - ./elastalert/rules:/opt/elastalert/rules
+      - ./elastalert/rule_templates:/opt/elastalert/rule_templates
+      - ./elastalert/config/smtp_auth_file.yaml:/opt/elastalert/smtp_auth_file.yaml:ro
+    ports:
+      - "3030:3030"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
 
   logstash:
     build:
@@ -27,8 +45,8 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     ports:
-      - "5000:5000"
-      - "9600:9600"
+      - "5100:5100"
+      - "5044:5044"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:

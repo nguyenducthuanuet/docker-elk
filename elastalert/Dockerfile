@@ -1,0 +1,1 @@
+FROM bitsensor/elastalert:latest
