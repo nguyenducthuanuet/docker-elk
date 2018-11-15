@@ -10,9 +10,10 @@ services:
         SG_VERSION: $SG_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ../elasticsearch/data:/usr/share/elasticsearch/data
+      - ./backup/elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
+      - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -47,6 +48,7 @@ services:
     ports:
       - "5100:5100"
       - "5044:5044"
+      - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -68,6 +70,7 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - elastalert
 
 networks:
 
