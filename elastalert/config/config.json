@@ -15,5 +15,7 @@
   },
   "es_host": "elasticsearch",
   "es_port": 9200,
+  "es_username": "logstash",
+  "es_password": "logstash",
   "writeback_index": "elastalert_status"
 }
