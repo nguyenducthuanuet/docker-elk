@@ -10,7 +10,7 @@ services:
         SG_VERSION: $SG_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ./backup/elasticsearch/data:/usr/share/elasticsearch/data
+      # - ./backup/elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
